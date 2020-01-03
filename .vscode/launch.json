@@ -5,13 +5,33 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": ".NET Core Launch (WebAPI)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/MarsExploration.WebService/bin/Debug/netcoreapp3.0/MarsExploration.WebService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/MarsExploration.WebService",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": ".NET Core Launch (WebUI)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/MarsExploration.WebUI/bin/Debug/netcoreapp3.0/MarsExploration.WebUI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/MarsExploration.WebUI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
