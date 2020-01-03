@@ -47,5 +47,10 @@ namespace MarsExploration.Core
                     break;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{Coordinates.X} {Coordinates.Y} {Heading.ToShortString()}";
+        }
     }
 }

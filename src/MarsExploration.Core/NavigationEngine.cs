@@ -8,11 +8,14 @@ namespace MarsExploration.Core
         public Plateau Plateau { get; }
         public Dictionary<Rover, List<NavigationAction>> RoverActionsCache { get; } = new Dictionary<Rover, List<NavigationAction>>();
 
-        public NavigationEngine(Plateau plateau, params Rover[] rovers)
+        public NavigationEngine(Plateau plateau, params Rover[] rovers) : this(plateau)
+        {
+            AddRoversToCache(rovers);
+        }
+
+        public NavigationEngine(Plateau plateau)
         {
             Plateau = plateau;
-
-            AddRoversToCache(rovers);
         }
 
         public void Guide(Rover rover, params NavigationAction[] navigationActions)
