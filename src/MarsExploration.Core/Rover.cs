@@ -4,8 +4,8 @@ namespace MarsExploration.Core
 {
     public class Rover
     {
-        public Point Coordinates { get; private set; }
-        public Heading Heading { get; private set; }
+        public Point Coordinates { get; internal set; }
+        public Heading Heading { get; internal set; }
 
         public Rover(Point initialCoordinates, Heading initialHeading)
         {
