@@ -27,7 +27,7 @@ namespace MarsExploration.WebService.Validators
             if (stringLines.Length % 2 == 0)
                 return false;
 
-            var plateauUpperRight = stringLines[0];
+            var plateauUpperRight = stringLines[0].Trim();
             if (!IsPlateauLineValid(plateauUpperRight))
                 return false;
 
@@ -35,12 +35,12 @@ namespace MarsExploration.WebService.Validators
             {
                 if (i % 2 == 0) // Even line indexes are navigation actions
                 {
-                    if (!IsNavigationActionLineValid(stringLines[i]))
+                    if (!IsNavigationActionLineValid(stringLines[i].Trim()))
                         return false;
                 }
                 else
                 {
-                    if (!IsRoverLineValid(stringLines[i]))
+                    if (!IsRoverLineValid(stringLines[i].Trim()))
                         return false;
                 }
             }

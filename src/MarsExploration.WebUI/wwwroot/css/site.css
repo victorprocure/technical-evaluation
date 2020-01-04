@@ -69,3 +69,20 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+#grid {
+	height: 400px;
+	width: 400px;
+}
+
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.tick line
+{
+  stroke: #ccc;
+  opacity: 0.5;
+}

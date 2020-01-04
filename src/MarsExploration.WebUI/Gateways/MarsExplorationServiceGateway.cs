@@ -5,8 +5,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using MarsExploration.Core;
 using MarsExploration.WebUI.Configurations;
+using MarsExploration.WebUI.Converter;
 using MarsExploration.WebUI.Extensions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MarsExploration.WebUI.Gateways
 {
@@ -31,9 +33,10 @@ namespace MarsExploration.WebUI.Gateways
         {
             _logger.LogInformation("Begining request for rover history");
 
-            using (var response = await _httpClient.GetAsync(ExplorationEndpoint).ConfigureAwait(false))
+            using (var response = await HttpClient.GetAsync(ExplorationEndpoint).ConfigureAwait(false))
             {
-                var rawHistory = await response.Content.ReadAsAsync<List<KeyValuePair<string, NavigationContext>>>().ConfigureAwait(false);
+                var resposneString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var rawHistory = JsonConvert.DeserializeObject<List<KeyValuePair<string, NavigationContext>>>(resposneString, new PointConverter());
                 _logger.LogRawHistory(rawHistory);
 
                 if (rawHistory == null || !rawHistory.Any())
@@ -48,9 +51,11 @@ namespace MarsExploration.WebUI.Gateways
             _logger.LogInformation("Beginning request for rover navigation: {0}", roverNavigation);
 
             var content = new StringContent(roverNavigation);
-            using(var response = await _httpClient.PostAsync(ExplorationEndpoint, content).ConfigureAwait(false))
+            using (var response = await HttpClient.PostAsync(ExplorationEndpoint, content).ConfigureAwait(false))
             {
-                var responseContent = await response.Content.ReadAsAsync<NavigationContext>().ConfigureAwait(false);
+                var resposneString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var responseContent = JsonConvert.DeserializeObject<NavigationContext>(resposneString, new PointConverter());
 
                 return responseContent;
             }

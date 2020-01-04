@@ -17,16 +17,16 @@ namespace MarsExploration.WebService.Factories
                     throw new InvalidOperationException("Unable to parse navigation string");
             }
 
-            var plateau = CreatePlateauFromLine(stringLines[0]);
+            var plateau = CreatePlateauFromLine(stringLines[0].Trim());
             var navigationActions = new List<IEnumerable<NavigationAction>>();
             var rovers = new List<Rover>();
 
             for (var i = 1; i < stringLines.Length; i++)
             {
                 if (i % 2 == 0) // navigation actions are even lines
-                    navigationActions.Add(CreateNavigationActionsFromLine(stringLines[i]));
+                    navigationActions.Add(CreateNavigationActionsFromLine(stringLines[i].Trim()));
                 else
-                    rovers.Add(CreateRoversFromLine(stringLines[i]));
+                    rovers.Add(CreateRoversFromLine(stringLines[i].Trim()));
             }
 
             return new NavigationContext(plateau, rovers, navigationActions);

@@ -7,13 +7,16 @@ namespace MarsExploration.Core
         public Point CurrentCoordinates { get; internal set; }
         public Heading CurrentHeading { get; internal set; }
 
-        public Point InitialCoordinates { get; internal set; }
-        public Heading InitialHeading { get; internal set; }
+        public Point InitialCoordinates { get; }
+        public Heading InitialHeading { get; }
 
         public Rover(Point initialCoordinates, Heading initialHeading)
         {
-            InitialCoordinates = CurrentCoordinates = initialCoordinates;
-            InitialHeading = CurrentHeading = initialHeading;
+            InitialCoordinates = initialCoordinates;
+            InitialHeading = initialHeading;
+
+            CurrentCoordinates = initialCoordinates;
+            CurrentHeading = initialHeading;
         }
 
         public void Turn(TurnDirection turnDirection)

@@ -1,0 +1,30 @@
+@model MarsExploration.WebUI.Models.HistoryViewModel;
+
+@{
+    ViewData["Title"] = "Mars Exploration - Historical Data";
+}
+
+    <div class="container">
+@foreach (var data in Model.HistoricalData)
+{
+        <div class="row">
+            <div class="col-sm">
+                <h2>Input String</h2>
+                <p>
+                    @foreach(var input in data.Key.Split("\n"))
+                    {
+                        @input<br/>
+                    }
+                </p>
+            </div>
+            <div class="col-md">
+                <h2>Output</h2>
+                <p>
+                    @foreach(var output in data.Value.Rovers.Select(r=>r.ToString())){
+                        @output<br />
+                    }
+                </p>
+            </div>
+        </div>
+}
+    </div>

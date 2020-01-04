@@ -42,6 +42,7 @@ namespace MarsExploration.WebService.Controllers
                     navigationString = await reader.ReadToEndAsync();
                 }
             }
+            navigationString = navigationString.Trim();
             if (!_navigationStringValidator.IsValidNavigationString(navigationString))
                 return BadRequest("Unable to validate navigation string");
             
@@ -54,7 +55,7 @@ namespace MarsExploration.WebService.Controllers
             var context = _navigationContextFactory.CreateFromNavigationString(navigationString);
             var navigationEngine = new NavigationEngine(context.Plateau);
 
-            var roverLocations = ExecuteAllActionsOnNavigationEngine(navigationEngine, context);
+            ExecuteAllActionsOnNavigationEngine(navigationEngine, context);
 
             historicalIO.Add(new KeyValuePair<string, NavigationContext>(navigationString, context));
             return Ok(context);
@@ -67,14 +68,11 @@ namespace MarsExploration.WebService.Controllers
             return Ok(historicalIO);
         }
 
-        private IEnumerable<string> ExecuteAllActionsOnNavigationEngine(NavigationEngine engine, NavigationContext context)
+        private void ExecuteAllActionsOnNavigationEngine(NavigationEngine engine, NavigationContext context)
         {
             for (var i = 0; i < context.Rovers.Count(); i++)
             {
-                var rover = context.Rovers[i];
-                engine.Guide(rover, context.NavigationActions[i].ToArray());
-
-                yield return rover.ToString();
+                engine.Guide(context.Rovers[i], context.NavigationActions[i].ToArray());
             }
         }
     }
