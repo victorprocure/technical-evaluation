@@ -4,18 +4,21 @@ namespace MarsExploration.Core
 {
     public class Rover
     {
-        public Point Coordinates { get; internal set; }
-        public Heading Heading { get; internal set; }
+        public Point CurrentCoordinates { get; internal set; }
+        public Heading CurrentHeading { get; internal set; }
+
+        public Point InitialCoordinates { get; internal set; }
+        public Heading InitialHeading { get; internal set; }
 
         public Rover(Point initialCoordinates, Heading initialHeading)
         {
-            Coordinates = initialCoordinates;
-            Heading = initialHeading;
+            InitialCoordinates = CurrentCoordinates = initialCoordinates;
+            InitialHeading = CurrentHeading = initialHeading;
         }
 
         public void Turn(TurnDirection turnDirection)
         {
-            int headingCalculation = ((int)Heading) + ((int)turnDirection);
+            int headingCalculation = ((int)CurrentHeading) + ((int)turnDirection);
             switch (headingCalculation)
             {
                 case -1:
@@ -26,31 +29,31 @@ namespace MarsExploration.Core
                     break;
             }
 
-            Heading = (Heading)headingCalculation;
+            CurrentHeading = (Heading)headingCalculation;
         }
 
         public void Move()
         {
-            switch (Heading)
+            switch (CurrentHeading)
             {
                 case Heading.North:
-                    Coordinates = new Point(Coordinates.X, Coordinates.Y + 1);
+                    CurrentCoordinates = new Point(CurrentCoordinates.X, CurrentCoordinates.Y + 1);
                     break;
                 case Heading.South:
-                    Coordinates = new Point(Coordinates.X, Coordinates.Y - 1);
+                    CurrentCoordinates = new Point(CurrentCoordinates.X, CurrentCoordinates.Y - 1);
                     break;
                 case Heading.East:
-                    Coordinates = new Point(Coordinates.X + 1, Coordinates.Y);
+                    CurrentCoordinates = new Point(CurrentCoordinates.X + 1, CurrentCoordinates.Y);
                     break;
                 case Heading.West:
-                    Coordinates = new Point(Coordinates.X - 1, Coordinates.Y);
+                    CurrentCoordinates = new Point(CurrentCoordinates.X - 1, CurrentCoordinates.Y);
                     break;
             }
         }
 
         public override string ToString()
         {
-            return $"{Coordinates.X} {Coordinates.Y} {Heading.ToShortString()}";
+            return $"{CurrentCoordinates.X} {CurrentCoordinates.Y} {CurrentHeading.ToShortString()}";
         }
     }
 }

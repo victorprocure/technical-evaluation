@@ -1,3 +1,5 @@
+using MarsExploration.Core;
+
 namespace MarsExploration.WebService.Factories
 {
     public interface INavigationContextFactory

@@ -37,9 +37,9 @@ namespace MarsExploration.Core.Tests
 
             navigationEngine.Guide(rover, navigationActions);
 
-            Assert.That(rover.Coordinates.X, Is.EqualTo(expectedX));
-            Assert.That(rover.Coordinates.Y, Is.EqualTo(expectedY));
-            Assert.That(rover.Heading, Is.EqualTo(expectedHeading));
+            Assert.That(rover.CurrentCoordinates.X, Is.EqualTo(expectedX));
+            Assert.That(rover.CurrentCoordinates.Y, Is.EqualTo(expectedY));
+            Assert.That(rover.CurrentHeading, Is.EqualTo(expectedHeading));
         }
 
         [Test]
@@ -71,9 +71,9 @@ namespace MarsExploration.Core.Tests
                 // Do nothing
             }
 
-            Assert.That(rover.Coordinates.X, Is.EqualTo(initialX));
-            Assert.That(rover.Coordinates.Y, Is.EqualTo(initialY));
-            Assert.That(rover.Heading, Is.EqualTo(initialHeading));
+            Assert.That(rover.CurrentCoordinates.X, Is.EqualTo(initialX));
+            Assert.That(rover.CurrentCoordinates.Y, Is.EqualTo(initialY));
+            Assert.That(rover.CurrentHeading, Is.EqualTo(initialHeading));
         }
 
         [Test]

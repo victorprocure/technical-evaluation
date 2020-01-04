@@ -32,8 +32,8 @@ namespace MarsExploration.Core
 
         private bool HandleNavigationAction(Rover rover, NavigationAction navigationAction)
         {
-            var originalCoordinates = rover.Coordinates;
-            var originalHeading = rover.Heading;
+            var originalCoordinates = rover.CurrentCoordinates;
+            var originalHeading = rover.CurrentHeading;
 
             switch (navigationAction)
             {
@@ -54,8 +54,8 @@ namespace MarsExploration.Core
                 return true;
             }
 
-            rover.Coordinates = originalCoordinates;
-            rover.Heading = originalHeading;
+            rover.CurrentCoordinates = originalCoordinates;
+            rover.CurrentHeading = originalHeading;
 
             return false;
         }
@@ -87,7 +87,7 @@ namespace MarsExploration.Core
 
         private void ValidateRoverOnPlateau(Rover rover)
         {
-            if (rover.Coordinates.X < Plateau.LowerLeftCoords.X || rover.Coordinates.X > Plateau.UpperRightCoords.X || rover.Coordinates.Y < Plateau.LowerLeftCoords.Y || rover.Coordinates.Y > Plateau.UpperRightCoords.Y)
+            if (rover.CurrentCoordinates.X < Plateau.LowerLeftCoords.X || rover.CurrentCoordinates.X > Plateau.UpperRightCoords.X || rover.CurrentCoordinates.Y < Plateau.LowerLeftCoords.Y || rover.CurrentCoordinates.Y > Plateau.UpperRightCoords.Y)
             {
                 throw new InvalidOperationException("Rover is not within the plateau");
             }

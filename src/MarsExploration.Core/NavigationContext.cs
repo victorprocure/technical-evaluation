@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MarsExploration.Core;
 
-namespace MarsExploration.WebService
+namespace MarsExploration.Core
 {
     public class NavigationContext
     {

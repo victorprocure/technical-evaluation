@@ -14,9 +14,9 @@ namespace MarsExploration.Core.Tests
 
             var rover = new Rover(initialCoordinates, initialHeading);
 
-            Assert.That(rover.Coordinates.X, Is.EqualTo(initialCoordinates.X));
-            Assert.That(rover.Coordinates.Y, Is.EqualTo(initialCoordinates.Y));
-            Assert.That(rover.Heading, Is.EqualTo(initialHeading));
+            Assert.That(rover.CurrentCoordinates.X, Is.EqualTo(initialCoordinates.X));
+            Assert.That(rover.CurrentCoordinates.Y, Is.EqualTo(initialCoordinates.Y));
+            Assert.That(rover.CurrentHeading, Is.EqualTo(initialHeading));
         }
 
         [TestCase(TurnDirection.Left, Heading.East, ExpectedResult = Heading.North)]
@@ -34,7 +34,7 @@ namespace MarsExploration.Core.Tests
 
             rover.Turn(turnDirection);
 
-            return rover.Heading;
+            return rover.CurrentHeading;
         }
 
         [TestCase(1, 2, Heading.North, 3)]
@@ -50,13 +50,13 @@ namespace MarsExploration.Core.Tests
 
             if (initialHeading == Heading.North || initialHeading == Heading.South)
             {
-                Assert.That(rover.Coordinates.Y, Is.EqualTo(expectedCoordinateChange));
-                Assert.That(rover.Coordinates.X, Is.EqualTo(initialX));
+                Assert.That(rover.CurrentCoordinates.Y, Is.EqualTo(expectedCoordinateChange));
+                Assert.That(rover.CurrentCoordinates.X, Is.EqualTo(initialX));
             }
             else
             {
-                Assert.That(rover.Coordinates.Y, Is.EqualTo(initialY));
-                Assert.That(rover.Coordinates.X, Is.EqualTo(expectedCoordinateChange));
+                Assert.That(rover.CurrentCoordinates.Y, Is.EqualTo(initialY));
+                Assert.That(rover.CurrentCoordinates.X, Is.EqualTo(expectedCoordinateChange));
             }
         }
     }

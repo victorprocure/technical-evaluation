@@ -34,6 +34,7 @@ namespace MarsExploration.WebService.Controllers
         [HttpPost]
         public async Task<IActionResult> InputNavigationString(string navigationString)
         {
+            // Double check string is actually not sent, fixes potential environmental issues
             if (string.IsNullOrEmpty(navigationString))
             {
                 using (var reader = new StreamReader(Request.Body))
@@ -44,7 +45,7 @@ namespace MarsExploration.WebService.Controllers
             if (!_navigationStringValidator.IsValidNavigationString(navigationString))
                 return BadRequest("Unable to validate navigation string");
             
-            var historicalIO = _memoryCache.GetOrCreate<List<KeyValuePair<string, string>>>(CacheKey, (_) => new List<KeyValuePair<string, string>>());
+            var historicalIO = _memoryCache.GetOrCreate<List<KeyValuePair<string, NavigationContext>>>(CacheKey, (_) => new List<KeyValuePair<string, NavigationContext>>());
             var cached = historicalIO.FirstOrDefault(kvp => kvp.Key.Equals(navigationString, StringComparison.OrdinalIgnoreCase));
 
             if(cached.Value != default)
@@ -54,18 +55,16 @@ namespace MarsExploration.WebService.Controllers
             var navigationEngine = new NavigationEngine(context.Plateau);
 
             var roverLocations = ExecuteAllActionsOnNavigationEngine(navigationEngine, context);
-            var result = string.Join(Environment.NewLine, roverLocations);
 
-            
-            historicalIO.Add(new KeyValuePair<string, string>(navigationString, result));
-            return Ok(result);
+            historicalIO.Add(new KeyValuePair<string, NavigationContext>(navigationString, context));
+            return Ok(context);
         }
 
         [HttpGet]
         public IActionResult InputOutputHistory()
         {
-            var historicalIO = _memoryCache.GetOrCreate(CacheKey, (_) => new List<KeyValuePair<string, string>>());
-            return Ok(historicalIO.Select(kvp => $"Input: {kvp.Key}{Environment.NewLine}Output: {kvp.Value}"));
+            var historicalIO = _memoryCache.GetOrCreate(CacheKey, (_) => new List<KeyValuePair<string, NavigationContext>>());
+            return Ok(historicalIO);
         }
 
         private IEnumerable<string> ExecuteAllActionsOnNavigationEngine(NavigationEngine engine, NavigationContext context)
